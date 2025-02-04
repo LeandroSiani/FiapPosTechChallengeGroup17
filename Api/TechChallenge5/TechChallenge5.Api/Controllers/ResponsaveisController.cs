@@ -11,7 +11,7 @@ namespace TechChallenge5.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-   // [Authorize]
+    [Authorize]
     public class ResponsaveisController : ControllerBase
     {
         private readonly IResponsavelService _responsavelService;

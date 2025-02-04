@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TechChallenge5.Data;
@@ -11,9 +12,11 @@ using TechChallenge5.Data;
 namespace TechChallenge5.Data.Migrations
 {
     [DbContext(typeof(TechChallengeDbContext))]
-    partial class TechChallengeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250204115449_Alter_ControleAcesso_Datahra_em_Datetime")]
+    partial class Alter_ControleAcesso_Datahra_em_Datetime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

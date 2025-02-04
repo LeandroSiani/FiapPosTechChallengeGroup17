@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechChallenge5.Domain.ViewModels.Identity;
 using TechChallenge5.Services.InternalServices;

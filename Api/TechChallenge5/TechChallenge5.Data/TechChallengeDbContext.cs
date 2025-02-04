@@ -31,6 +31,7 @@ namespace TechChallenge5.Data
             ConfigureControleAcessoEntity(modelBuilder);
             ConfigurePessoaEntity(modelBuilder);
             ConfigureHorarioEntity(modelBuilder);
+            
         }
 
         private static void ConfigureControleAcessoEntity(ModelBuilder modelBuilder)
@@ -39,6 +40,11 @@ namespace TechChallenge5.Data
                             .HasOne(ca => ca.Aluno)
                             .WithMany()
                             .HasForeignKey(ca => ca.AlunoId);
+            modelBuilder.Entity<ControleAcesso>()
+                            .Property(ca => ca.DataHora)
+                            .HasColumnType("timestamp")
+                            .IsRequired();
+
         }
 
         private static void ConfigureProfessorEntity(ModelBuilder modelBuilder)

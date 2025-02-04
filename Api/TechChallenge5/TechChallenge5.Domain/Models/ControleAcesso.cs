@@ -8,6 +8,6 @@ namespace TechChallenge5.Domain.Models
         public Aluno Aluno { get; set; }
         public int AlunoId { get; set; }
         public ControleEntradaType ControleEntradaType { get; set; }
-        public DateTime DataHora { get; set; }        
+        public DateTime DataHora { get; set; }
     }
 }

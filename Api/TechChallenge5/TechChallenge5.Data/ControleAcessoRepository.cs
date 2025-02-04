@@ -16,7 +16,7 @@ namespace TechChallenge5.Data
         {
             return await _context.ControleAcessos
                 .Include(a => a.Aluno)
-                .Where(a => a.AlunoId == alunoId && a.DataHora.Date == data)
+                .Where(a => a.AlunoId == alunoId && a.DataHora.Date == data.Date)
                 .ToListAsync();
         }
     }

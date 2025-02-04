@@ -30,21 +30,23 @@ namespace TechChallenge5.Services.InternalServices
                 ControleEntradaType = payload.Tipo,
                 AlunoId = payload.AlunoId
             };
-            var aluno = _alunoRepository.GetByIdAsync(payload.AlunoId);
+            var aluno = await _alunoRepository.GetByIdAsync(payload.AlunoId);
             var controleAcessos = await _controleAcessoRepository.GetByDataAlunoIdAsync(payload.AlunoId, payload.DataHora);
             if (aluno is null)
             {
                 throw new InvalidOperationException("Aluno não encontrado");
             }
-            if (payload.Tipo == Domain.Enum.ControleEntradaType.Entrada && controleAcessos.All(c => c.ControleEntradaType == Domain.Enum.ControleEntradaType.Entrada))
+            if (payload.Tipo == Domain.Enum.ControleEntradaType.Entrada && controleAcessos.Where(c => c.ControleEntradaType == Domain.Enum.ControleEntradaType.Entrada).Count() > 0)
             {
                 throw new InvalidOperationException("Entrada já registrada");
             }
-            if (payload.Tipo == Domain.Enum.ControleEntradaType.Saida && controleAcessos.All(c => c.ControleEntradaType == Domain.Enum.ControleEntradaType.Saida))
+            if (payload.Tipo == Domain.Enum.ControleEntradaType.Saida && controleAcessos.Where(c => c.ControleEntradaType == Domain.Enum.ControleEntradaType.Saida).Count() > 0)
             {
                 throw new InvalidOperationException("Saída já registrada");
             }
-
+            controleAcesso.AlunoId = payload.AlunoId;
+            controleAcesso.DataHora = payload.DataHora;
+            controleAcesso.ControleEntradaType = payload.Tipo;
             await _controleAcessoRepository.AddAsync(controleAcesso);
             return controleAcesso;
         }

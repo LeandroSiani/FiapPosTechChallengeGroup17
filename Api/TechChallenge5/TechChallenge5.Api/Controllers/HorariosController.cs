@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TechChallenge5.Domain.Models;
 using TechChallenge5.Services.InternalServices;
@@ -8,6 +9,7 @@ namespace TechChallenge5.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class HorariosController : ControllerBase
     {
         private readonly IHorarioService _horarioService;

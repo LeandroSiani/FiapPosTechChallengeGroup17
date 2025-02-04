@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TechChallenge5.Domain.ViewModels;
@@ -9,6 +10,7 @@ namespace TechChallenge5.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class ControleAcessosController : ControllerBase
     {
         private readonly IControleAcessoService _controleAcessoService;

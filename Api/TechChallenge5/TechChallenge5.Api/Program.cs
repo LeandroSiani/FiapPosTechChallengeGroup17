@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using TechChallenge5.BLL.Validators;
 using TechChallenge5.Data;
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<TechChallengeDbContext>(
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>()
            .AddEntityFrameworkStores<TechChallengeDbContext>()
            .AddDefaultTokenProviders();
+
 
 builder.Services.AddAuthentication(options =>
 {
@@ -49,6 +51,42 @@ TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddRepositories(builde
 TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddAutoMapper(builder.Services);
 
 builder.Services.AddControllers();
+
+
+// Configure Swagger/OpenAPI
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TechChallenge5 API", Version = "v1" });
+
+    // Configuração para adicionar o JWT token no header
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
+});
+
 
 // Register FluentValidation
 builder.Services.AddFluentValidationAutoValidation();
@@ -82,17 +120,20 @@ builder.Logging.AddDebug();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapOpenApi();
+//app.MapOpenApi();
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/openapi/v1.json", "TechChallenge5 API v1");
+        //options.SwaggerEndpoint("/openapi/v1.json", "TechChallenge5 API v1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "TechChallenge5 API v1");        
     });
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
