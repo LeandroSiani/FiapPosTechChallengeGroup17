@@ -1,7 +1,7 @@
 import React from "react";
 
 interface InputFormProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   id?: string;
 }
 

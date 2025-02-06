@@ -3,6 +3,7 @@
 import SiderBar from "@/components/SiderBar";
 import { Table } from "@/components/Table";
 import Title from "@/components/Title";
+import Link from "next/link";
 
 export default function AdminTeacher() {
   const columns = [
@@ -115,9 +116,12 @@ export default function AdminTeacher() {
       <section className="w-full py-10 px-8 overflow-auto flex flex-col gap-14 ">
         <div className="w-full flex justify-between">
           <Title title="Professores" />
-          <button className="h-16 py-5 bg-[#16738A] text-[#FFF] w-56 rounded-lg hover:bg-[#1b1b1b] transition-all duration-300">
+          <Link
+            href={"/admin/professores/cadastrar"}
+            className="h-16 py-5 bg-[#16738A] text-[#FFF] w-56 rounded-lg hover:bg-[#1b1b1b] transition-all duration-300 flex items-center justify-center"
+          >
             Cadastrar professor
-          </button>
+          </Link>
         </div>
 
         <Table columns={columns} rows={rows} />

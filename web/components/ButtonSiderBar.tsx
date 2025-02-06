@@ -7,7 +7,7 @@ import {
   GraduationCap,
   Student,
   Chats,
-  CurrencyCircleDollar,
+  Gear,
 } from "@phosphor-icons/react/dist/ssr";
 
 const iconsMap = {
@@ -15,7 +15,7 @@ const iconsMap = {
   GraduationCap: GraduationCap,
   Student: Student,
   Chats: Chats,
-  CurrencyCircleDollar: CurrencyCircleDollar,
+  Gear: Gear,
 };
 
 interface ButtonSiderBarProps {

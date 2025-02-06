@@ -16,15 +16,15 @@ using TechChallenge5.Services.InternalServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<TechChallengeDbContext>(
-    options => options.UseNpgsql(builder.Configuration.GetConnectionString("TechChallengePostgresConnection"))
+// Configuração do banco de dados
+builder.Services.AddDbContext<TechChallengeDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("TechChallengePostgresConnection"))
 );
 
+// Configuração de autenticação e identidade
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<int>>()
-           .AddEntityFrameworkStores<TechChallengeDbContext>()
-           .AddDefaultTokenProviders();
-
+    .AddEntityFrameworkStores<TechChallengeDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -45,23 +45,31 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Register repository interfaces and implementations
+// **Configuração do CORS**
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNextJs",
+        policy => policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
+});
+
+// Configuração de serviços internos e externos
 TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddRepositories(builder.Services);
-// Register AutoMapper configuration
 TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddAutoMapper(builder.Services);
+TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddInternalServices(builder.Services);
+TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddExternalServices(builder.Services);
 
 builder.Services.AddControllers();
 
-
-// Configure Swagger/OpenAPI
+// Configuração do Swagger para autenticação JWT
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TechChallenge5 API", Version = "v1" });
-
-    // Configura��o para adicionar o JWT token no header
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Description = "JWT Authorization header usando Bearer. Exemplo: \"Authorization: Bearer {token}\"",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
@@ -87,19 +95,14 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-// Register FluentValidation
+// Configuração de validações
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<AlunoViewModelValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<ResponsavelViewModelValidator>();
-// Register services
-TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddInternalServices(builder.Services);
-TechChallenge5.Api.Extensions.ServiceCollectionExtensions.AddExternalServices(builder.Services);
 
-// Register Hosted Services
+// Configuração de serviços e versionamento de API
 builder.Services.AddHostedService<VerificarEntradasSaidasJob>();
 
-// Add API versioning
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1, 0);
@@ -108,30 +111,30 @@ builder.Services.AddApiVersioning(options =>
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
 });
 
-
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// OpenAPI
 builder.Services.AddOpenApi();
 
-// Configure logging
+// Configuração de logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//app.MapOpenApi();
+// Configuração do pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        //options.SwaggerEndpoint("/openapi/v1.json", "TechChallenge5 API v1");
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "TechChallenge5 API v1");        
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "TechChallenge5 API v1");
     });
 }
 
 app.UseHttpsRedirection();
+
+// **ADICIONE ESSA LINHA AQUI**
+app.UseCors("AllowNextJs"); // Aplica a política CORS
 
 app.UseAuthentication();
 app.UseAuthorization();

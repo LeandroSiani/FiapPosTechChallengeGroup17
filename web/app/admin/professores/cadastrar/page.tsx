@@ -4,15 +4,23 @@ import { FileUpload } from "@/components/fileUpload";
 import { InputForm } from "@/components/inputForm";
 import SiderBar from "@/components/SiderBar";
 import Title from "@/components/Title";
+import Link from "next/link";
 
 export default function TeacherPerfil() {
   return (
     <main className="w-full h-screen flex overflow-x-hidden relative">
-      <SiderBar tenant="teacher" />
+      <SiderBar tenant="admin" />
 
       <section className="w-full py-10 px-8 overflow-auto flex flex-col gap-14 ">
         <div className="w-full flex justify-between">
-          <Title title="Perfil" />
+          <Link
+            href="/admin/professores"
+            className="border border-[#c0c0c0] px-4  py-2 rounded-lg font-bold"
+          >
+            Voltar
+          </Link>
+
+          <Title title="Cadastrar Professor" />
         </div>
 
         <form className="w-full flex flex-col gap-5">

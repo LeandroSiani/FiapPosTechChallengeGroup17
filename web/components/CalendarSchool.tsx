@@ -7,7 +7,6 @@ interface SiderBarProps {
 }
 
 export default function CalendarSchool({ tenant }: SiderBarProps) {
-  console.log("🚀 ~ CalendarSchool ~ tenant:", tenant);
   const eventsCalendar = calendarSchool[tenant] || [];
   const inputRef = useRef<HTMLInputElement>(null);
 

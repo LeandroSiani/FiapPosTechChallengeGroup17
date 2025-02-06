@@ -12,6 +12,7 @@
     "@phosphor-icons/react": "^2.1.7",
     "@radix-ui/react-accordion": "^1.2.2",
     "apexcharts": "^4.4.0",
+    "js-cookie": "^3.0.5",
     "keen-slider": "^6.8.6",
     "next": "15.1.6",
     "react": "^19.0.0",
@@ -19,6 +20,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

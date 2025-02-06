@@ -2,6 +2,7 @@ import { SignOut, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import ButtonSiderBar from "./ButtonSiderBar";
 import { sidebarConfig, Tenant } from "@/tenants/sidebarConfig";
+import { useAuth } from "@/context/AuthContext";
 
 interface SiderBarProps {
   tenant: Tenant;
@@ -9,6 +10,7 @@ interface SiderBarProps {
 
 export default function SiderBar({ tenant }: SiderBarProps) {
   const menuItems = sidebarConfig[tenant] || [];
+  const { logout } = useAuth();
 
   return (
     <div className="w-[363px] min-w-[363px] h-screen bg-[#16738A] p-8">
@@ -31,7 +33,10 @@ export default function SiderBar({ tenant }: SiderBarProps) {
             />
           ))}
 
-          <button className="w-full p-5 rounded-xl flex gap-6 items-center font-semibold text-2xl bg-[#16738A] text-white">
+          <button
+            className="w-full p-5 rounded-xl flex gap-6 items-center font-semibold text-2xl bg-[#16738A] text-white"
+            onClick={logout}
+          >
             <SignOut size={34} color="#FFFFFF" />
             Sair
           </button>
