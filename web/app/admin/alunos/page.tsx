@@ -4,6 +4,7 @@ import SiderBar from "@/components/SiderBar";
 import { Table } from "@/components/Table";
 import Title from "@/components/Title";
 import Link from "next/link";
+import rows from "./data";
 
 export default function AdminStudent() {
   const columns = [
@@ -71,41 +72,6 @@ export default function AdminStudent() {
       field: "buttonEdit",
       headerName: "",
       width: "110",
-    },
-  ];
-
-  const rows = [
-    {
-      id: 1,
-      nome: "Fulano de tal",
-      idade: 15,
-      cpf: "123.456.789-00",
-      genero: "Masculino",
-      dtNascimento: "01/01/2000",
-      nomeResponsavel: "Beltrano de tal",
-      contatoResponsavel: "1234-5678",
-      endereco: "Rua tal, 123",
-      dtMatricula: "01/01/2021",
-      statusMatricula: "Ativo",
-      neceEspecial: "Nenhuma",
-      observacoes: "Nenhuma",
-      buttonEdit: "/admin/alunos/1",
-    },
-    {
-      id: 2,
-      nome: "Ciclano de tal",
-      idade: 15,
-      cpf: "123.456.789-00",
-      genero: "Masculino",
-      dtNascimento: "01/01/2000",
-      nomeResponsavel: "Beltrano de tal",
-      contatoResponsavel: "1234-5678",
-      endereco: "Rua tal, 123",
-      dtMatricula: "01/01/2021",
-      statusMatricula: "Ativo",
-      neceEspecial: "Nenhuma",
-      observacoes: "Nenhuma",
-      buttonEdit: "/admin/alunos/2",
     },
   ];
 

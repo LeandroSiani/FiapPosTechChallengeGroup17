@@ -104,7 +104,7 @@ export default function Login() {
           <div className="w-[85%] h-[85%] bg-[#99DDCF] rounded-full flex items-center justify-center">
             <div className="w-[80%] h-[80%] bg-[#75D0C1] rounded-full flex items-center relative ">
               <p className="text-[#16738A] font-semibold text-[96px] absolute left-[-8%]">
-                Escola Pública <br /> Unificada
+                <span className="text-[130px]">Saber</span> <br /> Conecta
               </p>
             </div>
           </div>

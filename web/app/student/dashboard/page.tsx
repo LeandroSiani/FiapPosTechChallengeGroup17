@@ -6,12 +6,25 @@ import { GraduationCap, Student } from "@phosphor-icons/react/dist/ssr";
 import CalendarSchool from "@/components/CalendarSchool";
 import Title from "@/components/Title";
 import { Table } from "@/components/Table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { registrarEntrada } from "@/service/controleAcessoService";
+import { getAlunoByEmail } from "@/service/pessoasService";
 
 export default function dashboard() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [entradaRegistrada, setEntradaRegistrada] = useState(false);
+  const [alunoId, setAlunoId] = useState<any | null>(null);
+
+  useEffect(() => {
+    const fetchAluno = async () => {
+      try {
+        const data = await getAlunoByEmail();
+        setAlunoId(data.id);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    fetchAluno();
+  }, []);
 
   const columns = [
     {
@@ -139,17 +152,12 @@ export default function dashboard() {
     },
   ];
 
-  const handleBaterEntrada = async () => {
-    setIsLoading(true);
-
+  const handleRegistro = async () => {
     try {
-      await registrarEntrada(3);
-      setEntradaRegistrada(true);
-      alert("Entrada registrada com sucesso!");
+      const msg = await registrarEntrada(alunoId);
+      alert(msg);
     } catch (error) {
-      alert("Erro ao registrar a entrada");
-    } finally {
-      setIsLoading(false);
+      alert(error.message);
     }
   };
 
@@ -176,13 +184,10 @@ export default function dashboard() {
               />
 
               <button
-                className={`bg-blue-950 p-5 rounded-3xl shadow-md text-white text-2xl ${
-                  isLoading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-                onClick={handleBaterEntrada}
-                disabled={isLoading}
+                className={`bg-blue-950 p-5 rounded-3xl shadow-md text-white text-2xl`}
+                onClick={handleRegistro}
               >
-                {isLoading ? "Registrando..." : "Bater entrada"}
+                Bater entrada
               </button>
             </div>
 

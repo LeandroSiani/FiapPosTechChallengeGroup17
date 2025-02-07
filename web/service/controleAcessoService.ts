@@ -10,13 +10,27 @@ export const registrarEntrada = async (alunoId: number) => {
   }
 
   const now = new Date();
-  const dataHoraFormatada = `${now.getFullYear()}-${String(
-    now.getMonth() + 1
-  ).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(
-    now.getHours()
-  ).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(
+  const dataAtual = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(now.getDate()).padStart(2, "0")}`;
+
+  const dataHoraFormatada = `${dataAtual}T${String(now.getHours()).padStart(
+    2,
+    "0"
+  )}:${String(now.getMinutes()).padStart(2, "0")}:${String(
     now.getSeconds()
   ).padStart(2, "0")}`;
+
+  const entradaRegistrada = Cookies.get("entradaRegistrada");
+
+  // 🔹 Define se é entrada ou saída
+  const tipo = entradaRegistrada ? 2 : 1;
+
+  // 🔹 Impede registro de múltiplas entradas no mesmo dia
+  if (entradaRegistrada === dataAtual && tipo === 1) {
+    throw new Error("Você já registrou uma entrada hoje.");
+  }
 
   try {
     const response = await fetch(API_URL, {
@@ -27,7 +41,7 @@ export const registrarEntrada = async (alunoId: number) => {
       },
       body: JSON.stringify({
         alunoId,
-        tipo: 2,
+        tipo,
         dataHora: dataHoraFormatada,
       }),
     });
@@ -36,7 +50,24 @@ export const registrarEntrada = async (alunoId: number) => {
       throw new Error("Erro ao registrar entrada.");
     }
 
-    return await response.json();
+    const agora = new Date();
+    const meiaNoite = new Date();
+    meiaNoite.setHours(23, 59, 59, 999);
+    const tempoRestante =
+      (meiaNoite.getTime() - agora.getTime()) / (1000 * 60 * 60); // Em horas
+
+    if (tipo === 1) {
+      // 🔹 Se for entrada, salva o cookie até meia-noite
+      Cookies.set("entradaRegistrada", dataAtual, {
+        expires: tempoRestante / 24,
+        path: "/",
+      });
+      return "Registro de Entrada com sucesso!";
+    } else {
+      // 🔹 Se for saída, remove o cookie
+      Cookies.remove("entradaRegistrada");
+      return "Registro de Saída com sucesso!";
+    }
   } catch (error) {
     console.error("Erro na service de Controle de Acessos:", error);
     throw error;

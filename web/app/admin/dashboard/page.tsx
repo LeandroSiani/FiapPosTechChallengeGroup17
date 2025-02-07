@@ -16,6 +16,7 @@ import "keen-slider/keen-slider.min.css";
 import CalendarSchool from "@/components/CalendarSchool";
 import Title from "@/components/Title";
 import { donutChartsDataByTenant } from "@/data/chartDonutData";
+import professores from "./data";
 
 export default function dashboard() {
   const currentTenant: Tenant = "admin";
@@ -77,7 +78,7 @@ export default function dashboard() {
                 className="keen-slider"
                 style={{ maxWidth: "100%", marginTop: 25 }}
               >
-                {Array.from({ length: 15 }).map((_, idx) => (
+                {professores.map((professor, idx) => (
                   <div
                     key={idx}
                     className={` bg-white border border-[#C0C0C0] rounded-3xl py-3 px-6 keen-slider__slide number-slide${idx}`}
@@ -89,17 +90,17 @@ export default function dashboard() {
                       </div>
                       <div className="flex flex-col gap-3">
                         <p className="text-[#1b1b1b] text-base font-bold truncate w-28 overflow-hidden">
-                          Beltrano ferreira
+                          {professor.nome}
                         </p>
                         <p className="text-[#1b1b1b] text-base font-bold">
-                          Biologia
+                          {professor.disciplina}
                         </p>
                       </div>
                     </div>
                     <div className="mt-6 flex flex-col gap-3">
                       <p className="text-[#1b1b1b] text-2xl font-bold">Turma</p>
                       <p className="text-[#1b1b1b] text-xl font-normal">
-                        8º ano A
+                        {professor.turma}
                       </p>
                     </div>
                     <div className="mt-4 flex flex-col gap-3">
@@ -107,7 +108,7 @@ export default function dashboard() {
                         Status
                       </p>
                       <p className="text-[#1b1b1b] text-xl font-normal">
-                        Em aula
+                        {professor.status}
                       </p>
                     </div>
                   </div>

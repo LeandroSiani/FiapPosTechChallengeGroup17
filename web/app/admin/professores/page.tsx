@@ -4,6 +4,7 @@ import SiderBar from "@/components/SiderBar";
 import { Table } from "@/components/Table";
 import Title from "@/components/Title";
 import Link from "next/link";
+import rows from "./data";
 
 export default function AdminTeacher() {
   const columns = [
@@ -20,7 +21,7 @@ export default function AdminTeacher() {
     {
       field: "telefone",
       headerName: "Telefone",
-      width: "110",
+      width: "180",
     },
     {
       field: "email",
@@ -30,7 +31,7 @@ export default function AdminTeacher() {
     {
       field: "dtAdmissao",
       headerName: "Data de Admissão",
-      width: "110",
+      width: "130",
     },
     {
       field: "salario",
@@ -55,7 +56,7 @@ export default function AdminTeacher() {
     {
       field: "proxFeedback",
       headerName: "Próx. Feedback",
-      width: "110",
+      width: "130",
     },
     {
       field: "observacoes",
@@ -65,47 +66,12 @@ export default function AdminTeacher() {
     {
       field: "buttonAlert",
       headerName: "",
-      width: "110",
+      width: "80",
     },
     {
       field: "buttonEdit",
       headerName: "",
-      width: "110",
-    },
-  ];
-
-  const rows = [
-    {
-      id: 1,
-      disciplina: "Matemática",
-      professor: "Jon",
-      telefone: 14,
-      email: "email@email.com",
-      dtAdmissao: "2022-01-01",
-      salario: 1000,
-      turno: "Manhã",
-      status: "Ativo",
-      Series: "1º ao 5º",
-      proxFeedback: "2022-01-01",
-      observacoes: "Nenhuma",
-      buttonAlert: "admin/dashboard/",
-      buttonEdit: `admin/dashboard/`,
-    },
-    {
-      id: 2,
-      disciplina: "Matemática",
-      professor: "Jon",
-      telefone: 14,
-      email: "email@email.com",
-      dtAdmissao: "2022-01-01",
-      salario: 1000,
-      turno: "Manhã",
-      status: "Ativo",
-      Series: "1º ao 5º",
-      proxFeedback: "2022-01-01",
-      observacoes: "Nenhuma",
-      buttonAlert: "admin/dashboard/",
-      buttonEdit: `admin/dashboard/`,
+      width: "80",
     },
   ];
 

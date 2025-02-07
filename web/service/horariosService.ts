@@ -29,3 +29,30 @@ export const cadastrarHorario = async (horario: any) => {
     throw error;
   }
 };
+
+export const buscarHorarios = async () => {
+  const token = Cookies.get("token");
+
+  if (!token) {
+    throw new Error("Usuário não autenticado");
+  }
+
+  try {
+    const response = await fetch(BASE_URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar horários: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao buscar horários:", error);
+    throw error;
+  }
+};

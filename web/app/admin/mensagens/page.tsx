@@ -65,7 +65,7 @@ export default function AdminMensagens() {
 
       <section className="w-full py-10 px-8 overflow-auto flex flex-col ">
         <div className="w-full flex justify-between">
-          <Title title="Alunos" />
+          <Title title="Mensagens" />
           <button className="h-16 py-5 bg-[#16738A] text-[#FFF] w-56 rounded-lg hover:bg-[#1b1b1b] transition-all duration-300">
             Nova mensagem
           </button>

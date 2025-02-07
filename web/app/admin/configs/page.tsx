@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { InputForm } from "@/components/inputForm";
 import SiderBar from "@/components/SiderBar";
 import Title from "@/components/Title";
 import { Horario } from "@/@types/Horario";
-import { cadastrarHorario } from "@/service/horariosService";
+import { buscarHorarios, cadastrarHorario } from "@/service/horariosService";
 import {
   RegistroUsuario,
   registrarUsuario,
@@ -34,6 +34,7 @@ export default function Configs() {
   const [errorRegister, setErrorRegister] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [messageRegister, setMessageRegister] = useState<string | null>(null);
+  const [horarios, setHorarios] = useState<Horario[]>([]);
 
   // Manipula mudanças nos inputs de turnos
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +69,7 @@ export default function Configs() {
       setError("Erro ao cadastrar turno. Tente novamente.");
     } finally {
       setLoading(false);
+      fetchHorarios();
     }
   };
 
@@ -99,6 +101,19 @@ export default function Configs() {
       setLoadingRegister(false);
     }
   };
+
+  const fetchHorarios = async () => {
+    try {
+      const data = await buscarHorarios();
+      setHorarios(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchHorarios();
+  }, []);
 
   return (
     <main className="w-full h-screen flex overflow-x-hidden relative">
@@ -151,6 +166,36 @@ export default function Configs() {
               {loading ? "Adicionando..." : "Adicionar Turno"}
             </button>
           </form>
+
+          <div className="mt-10">
+            <p className="text-[#1b1b1b] mb-5 font-semibold text-xl">
+              Horarios cadastrados
+            </p>
+
+            <div className="w-full overflow-auto bg-white rounded-lg shadow-md">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr className="divide-x divide-gray-200">
+                    <th>Descrição</th>
+                    <th>Entrada</th>
+                    <th>Saída</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {horarios.map((horario) => (
+                    <tr
+                      key={horario.id}
+                      className="hover:bg-gray-100 text-center"
+                    >
+                      <td>{horario.descricao}</td>
+                      <td>{horario.horarioEntrada}</td>
+                      <td>{horario.horarioSaida}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
         {/* Registro de Usuários */}
