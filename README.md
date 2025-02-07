@@ -1,22 +1,29 @@
-# FiapPosTechChallengeGroup17
+<h1 align="center">
+  HACKTHON
+</p>
 
-# Projeto Web API .NET 9 com Entity Framework
+## Tecnologies Backend
 
-## Visão Geral
-Este projeto é uma API desenvolvida em .NET 9 utilizando Entity Framework Core para interação com banco de dados.
+- [Jest](https://jestjs.io/)
+- [.NET 9](https://dotnet.microsoft.com/en-us/)
+- [Entity Framework Core](https://learn.microsoft.com/en-us/ef/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [FluentValidation](https://fluentvalidation.net/)
+- [ASP.NET Identity](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity)
+- [Autenticação e autorização JWT](https://jwt.io/)
+- [API Versioning](https://learn.microsoft.com/en-us/aspnet/core/web-api/versioning/)
+- [Swagger e OpenAPI](https://swagger.io/specification/)
+- [Hosted Services no ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services)
 
-## Tecnologias Utilizadas
-- .NET 9
-- Entity Framework Core
-- Postgres
-- FluentValidation
-- Identity
-- Autenticação e autorização JWT
-- ApiVersioning
-- Swagger e OpenApi para documentação da API
-- HostedServices
+  ## Tecnologies Frontend  
 
-## Configuração e Instalação
+- [NextJS](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Radix-UI](https://www.radix-ui.com/)
+
+
+## 💻 Requisitos para o projeto rodar
 
 ### 1. Clonar o repositório
 
@@ -43,7 +50,26 @@ dotnet ef database update
 dotnet run
 ```
 
-## Autor
-Seu Nome - Group Tech Challenge
+## Backend já implementado, agora vamos de Frontend
+- Com o backend implementado, o frontend é bem simples, primeiro vamos sair da pasta do server e acessar a pasta web.
+  
+```bash
+$ cd ..
+$ cd web
+````
+
+- Dentro das pasta web, vamos instalar as dependencias do frontend
+  
+```bash
+$ npm install
+````
+
+- Agora com tudo instalado, basta acessar o terminal e iniciar o projeto
+
+```bash
+$ npm run dev
+````
+
+- Projeto frontend, vai abrir na [url](http://localhost:3000).
 
 
